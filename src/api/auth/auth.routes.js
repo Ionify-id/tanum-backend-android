@@ -14,13 +14,13 @@ const {
   deleteRefreshToken,
   revokeTokens,
 } = require('./auth.services');
-const { hashToken } = require('../../utils/hashtoken');
+const { hashToken } = require('../../utils/hashToken');
 
 const router = express.Router();
 
 router.post('/register', async (req, res, next) => {
   try {
-    const { email, password, fullName } = req.body;
+    const { job, email, password, fullName } = req.body;
     if (!email || !password) {
       res.status(400);
       throw new Error('You must provide an email and a password.');
@@ -31,6 +31,11 @@ router.post('/register', async (req, res, next) => {
       throw new Error('You must provide your full name.');
     }
 
+    if (!job) {
+      res.status(400);
+      throw new Error('You must provide your job.');
+    }
+
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
@@ -39,6 +44,7 @@ router.post('/register', async (req, res, next) => {
     }
 
     const user = await createUserByEmailAndPassword({
+      job,
       email,
       password,
       fullName,
@@ -51,10 +57,11 @@ router.post('/register', async (req, res, next) => {
       data: {
         fullName,
       },
-      message: 'Registration success',
-      status: true,
+      meta:{
+        code: 201,
+        message: 'Registration success',
+      }
     });
-    // }
   } catch (err) {
     console.log(err);
     next(err);
@@ -103,8 +110,10 @@ router.post('/login', async (req, res, next) => {
           data: {
             token: accessToken,
           },
-          message: 'Login succeed, enjoy your trip',
-          status: true,
+          meta:{
+            code:200,
+            message:'Login succeed, enjoy your trip'
+          }
         });
     }
   } catch (err) {

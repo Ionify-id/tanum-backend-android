@@ -1,5 +1,5 @@
 const { db } = require('../../utils/db');
-const { hashToken } = require('../../utils/hashtoken');
+const { hashToken } = require('../../utils/hashToken');
 
 // used when we create a refresh token.
 function addRefreshTokenToWhitelist({ jti, refreshToken, userId }) {

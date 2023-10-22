@@ -10,13 +10,60 @@ datasource db {
 model User {
   id            Int            @id @unique @default(autoincrement())
   email         String         @unique
-  password      String?
+  password      String
   fullName      String
+  job           Int
+  lands         Land[]         @relation("UserLand")
   refreshTokens RefreshToken[] @relation("UserRefreshToken")
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
 
+model Land {
+  id             Int            @id @unique @default(autoincrement())
+  userId         Int
+  user           User           @relation("UserLand", fields: [userId], references: [id], onDelete: Cascade)
+  name           String         
+  address        String
+  ownership      Int
+  area           Int
+  varietas       String
+  dateStart      DateTime
+  totalCost      Int
+  profit         Int
+  activities     Activity[]     @relation("LandActivity")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Activity {   
+  id          Int   @id @unique @default(autoincrement())
+  landId      Int
+  land        Land     @relation("LandActivity", fields: [landId], references: [id], onDelete: Cascade)
+  category    Int
+  action      Int
+  cost        Int
+  dateAction  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Article {   
+  id          Int   @id @unique @default(autoincrement())
+  title       String
+  description String
+  thumbnail   String   
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Video {   
+  id          Int   @id @unique @default(autoincrement())
+  title       String
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 model RefreshToken {   // gausah pake, tokennya dilamain
   id          String   @id @unique @default(uuid())
   hashedToken String

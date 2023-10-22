@@ -12,8 +12,10 @@ router.get('/profile', isAuthenticated, async (req, res, next) => {
     delete user.password;
     res.status(200).json({
       data: user,
-      message: 'Success retrieve your profile',
-      status: true,
+      meta:{
+        code:200,
+        message: 'Success retrieve your profile',
+      }
     });
   } catch (err) {
     next(err);
