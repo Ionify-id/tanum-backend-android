@@ -1,6 +1,5 @@
 const express = require('express');
 
-const request = require('request');
 const auth = require('./auth/auth.routes');
 const users = require('./users/users.routes');
 const lands =require('./lands/lands.routes');
@@ -21,4 +20,5 @@ router.use('/lands',lands);
 router.use('/activities', activities);
 router.use('/articles', articles);
 router.use('/videos',videos);
+
 module.exports = router;
