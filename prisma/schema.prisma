@@ -25,6 +25,7 @@ model Land {
   user           User           @relation("UserLand", fields: [userId], references: [id], onDelete: Cascade)
   name           String         
   address        String
+  image          String
   ownership      Int
   area           Int
   varietas       String

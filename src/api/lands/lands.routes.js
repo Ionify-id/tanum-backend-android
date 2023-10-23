@@ -41,8 +41,8 @@ router.get('/', isAuthenticated, async (req, res, next) => {
 
 router.post('/', isAuthenticated, async(req, res, next) => {
     try {
-        const requiredFields = ['name', 'address', 'ownership', 'area', 'varietas', 'dateStart'];
-        const { name, address, ownership, area, varietas, dateStart, totalCost=0, profit=0 } = req.body;
+        const requiredFields = ['name', 'address', 'ownership', 'area', 'varietas', 'dateStart', 'image'];
+        const { name, address, ownership, area, image,varietas, dateStart, totalCost=0, profit=0 } = req.body;
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 res.status(400);
@@ -51,7 +51,7 @@ router.post('/', isAuthenticated, async(req, res, next) => {
         }
         const { userId } = req.payload;
         const land = await createLand(
-            userId, name, address, ownership, area, varietas, dateStart, totalCost, profit
+            userId, name, address, ownership, area, varietas, dateStart, totalCost, profit, image
         );
         res.status(201).json({
             data: land,

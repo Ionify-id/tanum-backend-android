@@ -22,7 +22,7 @@ async function getMyLand(page, take, userId) {
     }
 }
 
-function createLand(userId, name, address, ownership, area, varietas, dateStart, totalCost, profit) {
+function createLand(userId, name, address, ownership, area, varietas, dateStart, totalCost, profit, image) {
     return db.land.create({
       data: {
         name,
@@ -30,6 +30,7 @@ function createLand(userId, name, address, ownership, area, varietas, dateStart,
         ownership,
         area,
         varietas,
+        image,
         dateStart: new Date(dateStart), 
         totalCost,
         profit,
