@@ -29,12 +29,9 @@ router.get('/:landId', isAuthenticated, async (req, res, next) => {
         take = parseInt(take, 10);
         }
 
-        const land = await getSingleLand(landId);
         const activities = await getLandActivities(page, take, landId, userId);
         res.status(200).json({
             data:{
-                totalCost: land.totalCost,
-                profit: land.profit,
                 activities
             },
             meta:{
