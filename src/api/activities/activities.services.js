@@ -43,10 +43,10 @@ async function createActivity(category, action, cost, dateAction, landId) {
                 data: {
                     updatedAt: new Date(),
                     totalCost: {
-                        increment: category !== 4 ? cost : 0,
+                        increment: category !== "Penjualan" ? cost : 0,
                     },
                     profit: {
-                        increment: category === 4 ? cost : -cost,
+                        increment: category === "Penjualan" ? cost : -cost,
                     },
                 },
             });
@@ -107,10 +107,10 @@ async function updateActivity(activityId, data) {
                 data: {
                     updatedAt: new Date(),
                     totalCost: {
-                        increment: data.category !== 4 ? costDifference : 0,
+                        increment: data.category !== "penjualan" ? costDifference : 0,
                     },
                     profit: {
-                        increment: data.category === 4 ? costDifference : -costDifference,
+                        increment: data.category === "penjualan" ? costDifference : -costDifference,
                     },
                 },
             });

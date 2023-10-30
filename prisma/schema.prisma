@@ -12,7 +12,7 @@ model User {
   email         String         @unique
   password      String
   fullName      String
-  job           Int
+  job           String
   lands         Land[]         @relation("UserLand")
   refreshTokens RefreshToken[] @relation("UserRefreshToken")
   createdAt     DateTime       @default(now())
@@ -26,7 +26,7 @@ model Land {
   name           String         
   address        String
   image          String
-  ownership      Int
+  ownership      String
   area           Int
   varietas       String
   dateStart      DateTime
@@ -41,8 +41,8 @@ model Activity {
   id          Int   @id @unique @default(autoincrement())
   landId      Int
   land        Land     @relation("LandActivity", fields: [landId], references: [id], onDelete: Cascade)
-  category    Int
-  action      Int
+  category    String
+  action      String
   cost        Int
   dateAction  DateTime
   createdAt   DateTime @default(now())

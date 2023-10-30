@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "Activity" ALTER COLUMN "category" SET DATA TYPE TEXT,
+ALTER COLUMN "action" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Land" ALTER COLUMN "ownership" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "job" SET DATA TYPE TEXT;
