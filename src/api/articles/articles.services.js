@@ -9,6 +9,7 @@ async function getArticles(page, take) {
             updatedAt: 'desc'
         },
         select: {
+            id: true,
             title: true,
             thumbnail: true,
         }

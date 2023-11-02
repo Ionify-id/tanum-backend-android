@@ -112,7 +112,7 @@ router.post('/login', async (req, res, next) => {
           },
           meta:{
             code:200,
-            message:'Login succeed, enjoy your trip'
+            message:'Login succeed'
           }
         });
     }
