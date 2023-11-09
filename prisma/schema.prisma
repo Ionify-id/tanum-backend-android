@@ -29,6 +29,7 @@ model Land {
   ownership      String
   area           Int
   varietas       String
+  plant          String
   dateStart      DateTime
   totalCost      Int
   profit         Int
