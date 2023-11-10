@@ -39,6 +39,26 @@ router.get('/', isAuthenticated, async (req, res, next) => {
     }
 });
 
+router.get('/:landId', isAuthenticated, async (req, res, next) => {
+    try {
+      const landId = parseInt(req.params.landId, 10);
+      const { userId } = req;
+      const land = await getSingleLand(landId);
+      if (!land || land.userId !== userId) {
+        throw new Error('You are not authorized to have access this land.');
+      }
+      res.status(200).json({
+        data: land,
+        meta:{
+            code:200,
+            message: 'Detail land has been retrieved',
+        }
+      });
+    } catch (err) {
+      next(err);
+    }
+});
+
 router.post('/', isAuthenticated, async(req, res, next) => {
     try {
         const requiredFields = ['name', 'address', 'ownership', 'area', 'varietas', 'dateStart', 'image', 'plant'];

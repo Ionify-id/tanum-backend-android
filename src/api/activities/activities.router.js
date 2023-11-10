@@ -44,6 +44,24 @@ router.get('/:landId', isAuthenticated, async (req, res, next) => {
     }
 });
 
+router.get('/detail/:activityId', isAuthenticated, async (req, res, next) => {
+    try {
+        const activityId = parseInt(req.params.activityId, 10);
+
+        const activity = await getSingleActivity(activityId);
+        res.status(200).json({
+            data:{
+                activity
+            },
+            meta:{
+                code:200,
+                message: 'Detail activity has been retrieved',
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 router.post('/:landId',isAuthenticated, async (req, res, next) => {
     try {
         const { category, action, cost, dateAction } = req.body;
