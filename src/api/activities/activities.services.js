@@ -115,7 +115,7 @@ async function updateActivity(activityId, data) {
                         increment: existingActivity.category !== "Penjualan" ? -existingActivity.cost : 0,
                     },
                     profit: {
-                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : 0,
+                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : existingActivity.cost,
                     },
                 },
             });
@@ -187,7 +187,7 @@ async function deleteActivity(activityId, userId) {
                         increment: existingActivity.category !== "Penjualan" ? -existingActivity.cost : 0,
                     },
                     profit: {
-                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : 0,
+                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : existingActivity.cost,
                     },
                 },
             });
@@ -199,26 +199,6 @@ async function deleteActivity(activityId, userId) {
     }
 }
 
-async function deleteActivity(activityId, userId){
-    const activity = await db.activity.findUnique({
-        where:{
-            id: activityId,
-        },
-    });
-    const land = await db.land.findUnique({
-        where:{
-            id:activity.landId,
-        },
-    });
-    if(userId != land.userId){
-        throw new Error ('You are not authorized to delete this activity.')
-    }
-    return db.activity.delete({
-        where:{
-            id: activityId,
-        },
-    });
-}
 module.exports = {
     getLandActivities,
     createActivity,
