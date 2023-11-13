@@ -33,7 +33,7 @@ async function getSingleArticle(articleId) {
             id: articleId,
         },
     });
-    const baseUrl = 'http://103.82.92.104/static/image/uploads/';
+    const baseUrl = 'https://tanum-dashboard.duckdns.org/static/image/uploads/';
     if (article && article.thumbnail) {
         article.thumbnail = baseUrl + article.thumbnail;
     }
