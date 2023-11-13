@@ -72,8 +72,12 @@ async function updateActivity(activityId, data) {
                 throw new Error('Activity not found');
             }
 
-            // Calculate the difference in cost to handle totalCost and profit updates
-            const costDifference = data.cost - existingActivity.cost;
+            const {
+                category,
+                action,
+                cost,
+                dateAction,
+            } = data;
 
             // Update the activity record
             const updatedActivity = await prisma.activity.update({
@@ -81,8 +85,81 @@ async function updateActivity(activityId, data) {
                     id: activityId,
                 },
                 data: {
-                    ...data,
-                    dateAction: data.dateAction  ? new Date(data.dateAction) : existingActivity.dateAction,
+                    category,
+                    action,
+                    cost,
+                    dateAction: new Date(dateAction),
+                },
+            });
+
+            // Retrieve the associated land record
+            const landId = existingActivity.landId;
+            const existingLand = await prisma.land.findUnique({
+                where: {
+                    id: landId,
+                },
+            });
+
+            if (!existingLand) {
+                throw new Error('Land not found');
+            }
+
+            // Update the land record's totalCost and profit fields based on category
+            await prisma.land.update({
+                where: {
+                    id: landId,
+                },
+                data: {
+                    updatedAt: new Date(),
+                    totalCost: {
+                        increment: existingActivity.category !== "Penjualan" ? -existingActivity.cost : 0,
+                    },
+                    profit: {
+                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : 0,
+                    },
+                },
+            });
+            await prisma.land.update({
+                where: {
+                    id: landId,
+                },
+                data: {
+                    updatedAt: new Date(),
+                    totalCost: {
+                        increment: category !== "Penjualan" ? cost : 0,
+                    },
+                    profit: {
+                        increment: category === "Penjualan" ? cost : -cost,
+                    },
+                },
+            });
+
+            return updatedActivity;
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+async function deleteActivity(activityId, userId) {
+    try {
+        return db.$transaction(async (prisma) => {
+            // Retrieve the existing activity record
+            const existingActivity = await prisma.activity.findUnique({
+                where: {
+                    id: activityId,
+                },
+            });
+
+            if (!existingActivity) {
+                throw new Error('Activity not found');
+            }
+
+            // Delete the activity record
+            await db.activity.delete({
+                where:{
+                    id: activityId,
                 },
             });
             
@@ -107,15 +184,15 @@ async function updateActivity(activityId, data) {
                 data: {
                     updatedAt: new Date(),
                     totalCost: {
-                        increment: data.category !== "penjualan" ? costDifference : 0,
+                        increment: existingActivity.category !== "Penjualan" ? -existingActivity.cost : 0,
                     },
                     profit: {
-                        increment: data.category === "penjualan" ? costDifference : -costDifference,
+                        increment: existingActivity.category === "Penjualan" ? -existingActivity.cost : 0,
                     },
                 },
             });
 
-            return updatedActivity;
+            return deleteActivity;
         });
     } catch (error) {
         throw error;

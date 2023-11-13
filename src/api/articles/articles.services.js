@@ -14,7 +14,7 @@ async function getArticles(page, take) {
             thumbnail: true,
         }
     });
-    const baseUrl = 'http://103.82.92.104/static/image/uploads/';
+    const baseUrl = 'https://tanum-dashboard.duckdns.org/static/image/uploads/';
     const articlesWithFullThumbnailUrls = articles.map(article => {
         if (article.thumbnail) {
             article.thumbnail = baseUrl + article.thumbnail;
