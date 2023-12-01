@@ -49,7 +49,7 @@ async function getSingleLand(landId){
         },
     });
     if(!land){
-        throw new Error ('Land not found');
+        throw new Error ('Lahan tidak ditemukan!');
     }
     return land;
 }
@@ -62,7 +62,7 @@ async function updateLand(landId, data){
     });
 
     if(!land){
-        throw new Error ('Land not found!');
+        throw new Error ('Lahan tidak ditemukan!');
     }
 
     return db.land.update({
@@ -89,7 +89,7 @@ async function deleteLand(landId) {
         });
 
         if (!land) {
-            throw new Error('Land not found!');
+            throw new Error('Lahan tidak ditemukan!');
         }
 
         // Delete all related activities
@@ -112,7 +112,7 @@ async function deleteLand(landId) {
         });
 
         // Return a success message or any other response as needed
-        return { message: `Land with ID ${landId} and its related activities have been deleted.` };
+        return { message: `Lahan dengan ID ${landId} dan aktivitas didalamnya telah dihapus.` };
     } catch (error) {
         console.error(error);
         throw error;

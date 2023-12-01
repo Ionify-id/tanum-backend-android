@@ -14,7 +14,7 @@ router.get('/profile', isAuthenticated, async (req, res, next) => {
       data: user,
       meta:{
         code:200,
-        message: 'Success retrieve your profile',
+        message: 'Berhasil mengambil profil Anda',
       }
     });
   } catch (err) {

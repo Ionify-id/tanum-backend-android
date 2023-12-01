@@ -69,7 +69,7 @@ async function updateActivity(activityId, data) {
             });
 
             if (!existingActivity) {
-                throw new Error('Activity not found');
+                throw new Error('Aktivitas tidak ditemukan');
             }
 
             const {
@@ -101,7 +101,7 @@ async function updateActivity(activityId, data) {
             });
 
             if (!existingLand) {
-                throw new Error('Land not found');
+                throw new Error('Lahan tidak ditemukan');
             }
 
             // Update the land record's totalCost and profit fields based on category
@@ -153,7 +153,7 @@ async function deleteActivity(activityId, userId) {
             });
 
             if (!existingActivity) {
-                throw new Error('Activity not found');
+                throw new Error('Aktifitas tidak ditemukan');
             }
 
             // Delete the activity record
@@ -173,7 +173,7 @@ async function deleteActivity(activityId, userId) {
             });
 
             if (!existingLand) {
-                throw new Error('Land not found');
+                throw new Error('Lahan tidak ditemukan');
             }
 
             // Update the land record's totalCost and profit fields based on category

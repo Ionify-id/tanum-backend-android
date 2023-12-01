@@ -27,7 +27,7 @@ model Land {
   address        String
   image          String
   ownership      String
-  area           Int
+  area           Float
   varietas       String
   plant          String
   dateStart      DateTime

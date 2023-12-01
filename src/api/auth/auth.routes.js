@@ -23,24 +23,24 @@ router.post('/register', async (req, res, next) => {
     const { job, email, password, fullName } = req.body;
     if (!email || !password) {
       res.status(400);
-      throw new Error('You must provide an email and a password.');
+      throw new Error('Anda harus memberikan Nomor HP dan password.');
     }
 
     if (!fullName) {
       res.status(400);
-      throw new Error('You must provide your full name.');
+      throw new Error('Anda harus memberikan nama lengkap Anda.');
     }
 
     if (!job) {
       res.status(400);
-      throw new Error('You must provide your job.');
+      throw new Error('Anda harus menyediakan pekerjaan Anda.');
     }
 
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
       res.status(400);
-      throw new Error('Email already in use.');
+      throw new Error('Nomor HP sudah digunakan.');
     }
 
     const user = await createUserByEmailAndPassword({
@@ -59,7 +59,7 @@ router.post('/register', async (req, res, next) => {
       },
       meta:{
         code: 201,
-        message: 'Registration success',
+        message: 'Pendaftaran Berhasil!',
       }
     });
   } catch (err) {
@@ -76,14 +76,14 @@ router.post('/login', async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400);
-        throw new Error('You must provide an email and a password.');
+        throw new Error('Anda harus memberikan Nomor HP dan password.');
     }
 
     existingUser = await findUserByEmail(email);
 
     if (!existingUser) {
         res.status(403);
-        throw new Error('Invalid login credentials.');
+        throw new Error('Kredensial masuk tidak valid.');
     }
 
     const validPassword = await bcrypt.compare(
@@ -93,7 +93,7 @@ router.post('/login', async (req, res, next) => {
 
     if (!validPassword) {
         res.status(403);
-        throw new Error('Wrong password');
+        throw new Error('Salah kata sandi!');
     }
 
     const jti = uuidv4();
@@ -112,7 +112,7 @@ router.post('/login', async (req, res, next) => {
           },
           meta:{
             code:200,
-            message:'Login succeed'
+            message:'Masuk berhasil!'
           }
         });
     }

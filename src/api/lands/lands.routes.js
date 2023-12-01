@@ -31,7 +31,7 @@ router.get('/', isAuthenticated, async (req, res, next) => {
         data: land,
         meta:{
             code:200,
-            message: 'All of your land has been retrieved',
+            message: 'Semua Lahan Anda telah diambil',
         }
       });
     } catch (err) {
@@ -45,13 +45,13 @@ router.get('/:landId', isAuthenticated, async (req, res, next) => {
       const { userId } = req;
       const land = await getSingleLand(landId);
       if (!land || land.userId !== userId) {
-        throw new Error('You are not authorized to have access this land.');
+        throw new Error('Anda tidak memiliki ijin untuk mengakses tanah ini.');
       }
       res.status(200).json({
         data: land,
         meta:{
             code:200,
-            message: 'Detail land has been retrieved',
+            message: 'Detail tanah telah diambil',
         }
       });
     } catch (err) {
@@ -66,7 +66,7 @@ router.post('/', isAuthenticated, async(req, res, next) => {
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 res.status(400);
-                throw new Error(`You must provide a ${field} to create a land.`);
+                throw new Error(`Anda harus menyediakan ${field} untuk membuat lahan.`);
             }
         }
         const { userId } = req.payload;
@@ -77,7 +77,7 @@ router.post('/', isAuthenticated, async(req, res, next) => {
             data: land,
             meta:{
                 code:201,
-                message: 'New Land has been created',
+                message: 'Lahan Baru telah dibuat',
             }
         });
     } catch (err) {
@@ -91,7 +91,7 @@ router.patch('/:landId',isAuthenticated, async (req, res, next) => {
         const { userId } = req.payload;
         const land = await getSingleLand(landId);
         if (!land || land.userId !== userId) {
-            throw new Error('You are not authorized to update this land.');
+            throw new Error('Anda tidak memiliki ijin memperbarui lahan ini.');
         }
 
         let data = { ...req.body };
@@ -101,7 +101,7 @@ router.patch('/:landId',isAuthenticated, async (req, res, next) => {
             data: landUpdate,
             meta:{
                 code:201,
-                message: `Land with id ${landId} has been updated`,
+                message: `Lahan dengan id ${landId} telah diperbarui`,
             }
         });
     } catch (err) {
@@ -115,7 +115,7 @@ router.delete('/:landId', isAuthenticated, async (req, res, next) => {
         const { userId } = req.payload;
         const land = await getSingleLand(landId, userId);
         if (!land || land.userId !== userId) {
-            throw new Error('You are not authorized to delete this land.');
+            throw new Error('Anda tidak memiliki ijin menghapus tanah ini.');
         }
 
         const landDel = await deleteLand(landId);
@@ -123,7 +123,7 @@ router.delete('/:landId', isAuthenticated, async (req, res, next) => {
             data: landDel,
             meta:{
                 code:201,
-                message: `Land with id ${landId} has been deleted`
+                message: `Lahan dengan id ${landId} telah dihapus`
             }
         });
     } catch (err) {

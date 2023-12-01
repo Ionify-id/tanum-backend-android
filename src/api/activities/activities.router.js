@@ -36,7 +36,7 @@ router.get('/:landId', isAuthenticated, async (req, res, next) => {
             },
             meta:{
                 code:200,
-                message: 'All of your activities has been retrieved',
+                message: 'Semua aktivitas Anda telah diambil',
             }
         });
     } catch (err) {
@@ -55,7 +55,7 @@ router.get('/detail/:activityId', isAuthenticated, async (req, res, next) => {
             },
             meta:{
                 code:200,
-                message: 'Detail activity has been retrieved',
+                message: 'Detail aktivitas telah diambil',
             }
         });
     } catch (err) {
@@ -71,7 +71,7 @@ router.post('/:landId',isAuthenticated, async (req, res, next) => {
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 res.status(400);
-                throw new Error(`You must provide a ${field} to create a land.`);
+                throw new Error(`Anda harus memberi ${field} untuk membuat lahan.`);
             }
         }
 
@@ -80,7 +80,7 @@ router.post('/:landId',isAuthenticated, async (req, res, next) => {
             data:activity,
             meta:{
                 code:201,
-                message: 'New Activity has been created',
+                message: 'Aktivitas Baru telah dibuat',
             }
         })
     } catch (err) {
@@ -95,7 +95,7 @@ router.patch('/:activityId',isAuthenticated, async(req, res, next) => {
         const activity = await getSingleActivity(activityId);
         const land = await getSingleLand(activity.landId)
         if (!activity || land.userId !== userId) {
-            throw new Error('You are not authorized to update this activity.');
+            throw new Error('Anda tidak memiliki ijin memperbarui aktivitas ini.');
         }
 
         let data = { ...req.body };
@@ -104,7 +104,7 @@ router.patch('/:activityId',isAuthenticated, async(req, res, next) => {
             data: activityUpdate,
             meta:{
                 code:201,
-                message: `Activity with id ${activityId} has been updated`,
+                message: `Aktivitas dengan id ${activityId} telah diperbarui`,
             }
         });
     } catch (err) {
@@ -122,7 +122,7 @@ router.delete('/:activityId',isAuthenticated, async (req, res, next) => {
             data: activityDel,
             meta:{
                 code:201,
-                message: `Activity with id ${activityId} has been deleted`,
+                message: `Aktivitas dengan id ${activityId} telah dihapus`,
             }
         })
     } catch (err) {

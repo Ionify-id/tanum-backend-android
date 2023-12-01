@@ -26,7 +26,7 @@ function isAuthenticated(req, res, next) {
 
   if (!authorization) {
     res.status(401);
-    throw new Error('Un-Authorized, you are not authenticated');
+    throw new Error('Tidak Memiliki Izin, Anda tidak terautentikasi');
   }
 
   try {
@@ -41,7 +41,7 @@ function isAuthenticated(req, res, next) {
     if (err.name === 'TokenExpiredError') {
       throw new Error(err.name);
     }
-    throw new Error('Un-Authorized');
+    throw new Error('Tidak Memiliki Izin');
   }
   return next();
 }

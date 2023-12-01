@@ -24,7 +24,7 @@ router.get('/', isAuthenticated, async (req, res, next) => {
             data: videos,
             meta:{
                 code:200,
-                message: 'All of your videos has been retrieved'
+                message: 'Semua video Anda telah diambil'
             }
         });
     } catch (err) {

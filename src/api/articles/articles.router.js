@@ -26,7 +26,7 @@ router.get('/',isAuthenticated, async (req, res, next) => {
             data: articles,
             meta:{
                 code:200,
-                message: 'All of your articles has been retrieved',
+                message: 'Semua artikel Anda telah diambil',
             }
         });
     } catch (err) {
@@ -43,7 +43,7 @@ router.get('/:articleId', isAuthenticated, async (req, res, next) => {
             data:article,
             meta:{
                 code:200,
-                message: 'Your Article has been retrieved'
+                message: 'Semua artikel Anda telah diambil'
             }
         });
     } catch (err) {
